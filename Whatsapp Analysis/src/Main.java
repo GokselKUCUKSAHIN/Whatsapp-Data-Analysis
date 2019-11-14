@@ -35,9 +35,15 @@ public class Main
                 new Message(dt, matcher.group(6), matcher.group(7));
             }
         }
-        for (Message message:Message.messages)
+        Message.doAnalysis();
+        for (int i = 0; i < Message.names.size(); i++)
         {
-            System.out.println(message.senderID);
+            System.out.println(Message.names.get(i) + ": " + Message.counts.get(i));
+        }
+        System.out.println("-------");
+        for (int i = 0; i < Message.messageCount.size(); i++)
+        {
+            System.out.println(Message.names.get(i) + ": " + Message.messageCount.get(i));
         }
     }
 
