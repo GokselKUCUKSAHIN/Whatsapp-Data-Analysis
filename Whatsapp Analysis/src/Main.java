@@ -1,36 +1,45 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main
 {
+
     static ArrayList<String> rows = new ArrayList<>();
+
     public static void main(String[] args) throws IOException
     {
-        DateTime dt = new DateTime();
-        dt.setDateTime(2,3,2019,2,1);
-        System.out.println(dt);
+        loadDataFromTxt();
+        String text = rows.get(41);
+        Matcher matcher;
+        //                DAY.MONTH.YEAR HOUR:MINUTE - USER_NAME: SOME TEXT FOO BAR BLAH BLAH
+        String regex = "(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}) - (.*): (.*)"; //tested
+        Pattern newlinePattern = Pattern.compile(regex);
 
-        //loadDataFromTxt();
-
-        for (String str:rows)
+        for (String line : rows)
         {
-            System.out.println(str);
+            matcher = newlinePattern.matcher(line);
+            if (matcher.find())
+            {
+                // 0 is whole line
+                /*int day = Integer.parseInt(matcher.group(1));
+                int month = Integer.parseInt(matcher.group(2));
+                int year = Integer.parseInt(matcher.group(3));
+                int hour = Integer.parseInt(matcher.group(4));
+                int minute = Integer.parseInt(matcher.group(5));
+                DateTime dt = new DateTime(day,month,year,hour,minute);*/
+                System.out.println(matcher.group(7));
+            }
         }
     }
 
-
-
     static void loadDataFromTxt() throws FileNotFoundException
     {
-        String path = "res/data.txt";
+        String path = "../privateData/res/data.txt"; //res/data.txt //default
         File file = new File(path);
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine())
