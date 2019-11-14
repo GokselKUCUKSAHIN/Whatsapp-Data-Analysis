@@ -17,9 +17,9 @@ public class Main
         String text = rows.get(41);
         Matcher matcher;
         //                DAY.MONTH.YEAR HOUR:MINUTE - USER_NAME: SOME TEXT FOO BAR BLAH BLAH
-        String regex = "(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}) - (.*): (.*)"; //tested
+        String regex = "(\\d{2}).(\\d{2}).(\\d{4}) (\\d{2}):(\\d{2}) -([A-Za-z ığüşöçİĞÜŞÖÇ]+): (.*)"; //tested
         Pattern newlinePattern = Pattern.compile(regex);
-
+        int i = 0;
         for (String line : rows)
         {
             matcher = newlinePattern.matcher(line);
@@ -31,8 +31,9 @@ public class Main
                 int year = Integer.parseInt(matcher.group(3));
                 int hour = Integer.parseInt(matcher.group(4));
                 int minute = Integer.parseInt(matcher.group(5));
-                DateTime dt = new DateTime(day,month,year,hour,minute);*/
-                System.out.println(matcher.group(7));
+                DateTime dt = new DateTime(day,month,year,hour,minute);
+                //System.out.println(matcher.group(6));*/
+                System.out.println(matcher.group(6));
             }
         }
     }
